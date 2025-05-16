@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List Portal</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: cursive;
+            background: url('https://www.sheknows.com/wp-content/uploads/2018/08/dgldbejjyofmcsfvkfd9.jpeg?w=1920') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .welcome {
+            color: black;
+            text-shadow: 2px 2px 4px #000;
+            font-size: 2.5em;
+            margin-top: 100px;
+        }
+
+        .top-right-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .top-right-buttons a {
+            background-color: #d41555;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .top-right-buttons a:hover {
+            background-color: #b41448;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-right-buttons">
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+
+    <div class="welcome">Welcome to our To-Do List Portal</div>
+</body>
+</html>

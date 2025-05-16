@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Tasks List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #ffe6f0;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #cc0066;
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #cc0066;
+            margin-top: 40px;
+            font-size: 28px;
+        }
+
+        table {
+            width: 70%;
+            margin: 0 auto 30px;
+            border-collapse: collapse;
+            background-color: #fff0f5;
+            box-shadow: 0 0 10px rgba(204, 0, 102, 0.2);
+            border-radius: 8px;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #ffcce0;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #cc0066;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #ffe0eb;
+        }
+
+        a.button {
+            display: inline-block;
+            margin: 20px;
+            padding: 12px 24px;
+            background-color: #cc0066;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        a.button:hover {
+            background-color: #b30059;
+        }
+
+        em {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Task Lists</h1>
+
+    {% if personal_tasks %}
+        <h2>Personal Tasks</h2>
+        <table>
+            <tr><th>Task</th></tr>
+            {% for task in personal_tasks %}
+                <tr><td>{{ task }}</td></tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p><em>No personal tasks found.</em></p>
+    {% endif %}
+
+    {% if work_tasks %}
+        <h2>Work Routine Tasks</h2>
+        <table>
+            <tr><th>Task</th></tr>
+            {% for task in work_tasks %}
+                <tr><td>{{ task }}</td></tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p><em>No work routine tasks found.</em></p>
+    {% endif %}
+
+    <a href="{% url 'main' %}" class="button">← Back to Main Page</a>
+</body>
+</html>

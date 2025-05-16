@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plan Your Work Routine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lucida+Calligraphy&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color:rgba(255, 240, 245, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .task-container {
+            text-align: center;
+            background-color: rgba(255, 240, 245, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-container h1 {
+            font-family: 'Lucida Calligraphy', cursive;
+            color: #d41555;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .task-input {
+            padding: 10px;
+            font-size: 18px;
+            width: 80%;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #d41555;
+        }
+
+        .add-task-button, .submit-button, .back-button {
+            background-color: #d41555;
+            color: white;
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            margin-right: 10px;
+        }
+
+        .add-task-button:hover, .submit-button:hover, .back-button:hover {
+            background-color: #d41555;
+        }
+
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .task-list li {
+            padding: 10px;
+            border: 1px solid #d41555;
+            margin: 5px 0;
+            border-radius: 5px;
+            background-color: #fff0f5;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        a.back-button {
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="task-container">
+        <h1>Plan Your Work Routine</h1>
+        <input type="text" id="task-input" class="task-input" placeholder="Enter work task">
+        <button class="add-task-button" onclick="addTask()">Add Task</button>
+
+        <ul id="task-list" class="task-list"></ul>
+
+        <form id="task-form" method="post" action="/tasks-list/">
+            {% csrf_token %}
+            <input type="hidden" name="tasks" id="hidden-tasks">
+            <div class="button-group">
+                <button type="submit" class="submit-button">Submit and View Tasks List</button>
+                <a href="{% url 'main' %}" class="back-button">← Back to Main</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let tasks = [];
+
+        function addTask() {
+            const taskInput = document.getElementById("task-input");
+            const taskValue = taskInput.value.trim();
+
+            if (taskValue !== "") {
+                tasks.push(taskValue);
+                taskInput.value = "";
+                renderTaskList();
+            } else {
+                alert("Please enter a task!");
+            }
+        }
+
+        function renderTaskList() {
+            const taskList = document.getElementById("task-list");
+            taskList.innerHTML = "";
+
+            tasks.forEach(task => {
+                const li = document.createElement("li");
+                li.textContent = task;
+                taskList.appendChild(li);
+            });
+        }
+
+        document.getElementById("task-form").addEventListener("submit", function (e) {
+            if (tasks.length === 0) {
+                e.preventDefault();
+                alert("Please add at least one task before submitting.");
+            } else {
+                document.getElementById("hidden-tasks").value = JSON.stringify(tasks);
+            }
+        });
+    </script>
+</body>
+</html>
